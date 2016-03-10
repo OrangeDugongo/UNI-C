@@ -1,2 +1,2 @@
-#UNI-c
+#UNI-C
 Esercizi esame programmazione uno.
