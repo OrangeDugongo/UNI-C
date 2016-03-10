@@ -11,13 +11,13 @@ int main(){
 }
 
 void Swap(int *a, int *b){
-    int tmep = *a;
+    int temp = *a;
     *a=*b;
-    *b=tmep;
+    *b=temp;
 }
 
 void SwapInutile(int a, int b) {
-  int tmep=a;
+  int temp=a;
   a=b;
-  b=tmep;
+  b=temp;
 }
