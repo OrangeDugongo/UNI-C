@@ -7,7 +7,7 @@ interi tra 1 e 8.
 **/
 #include <stdio.h>
 void Posizione(char str[], int *, int *);
-int RigaColonna(int, int, int, in );
+int RigaColonna(int, int, int, int);
 int Diagonali(int, int, int, int);
 
 int main(){
@@ -34,6 +34,13 @@ void Posizione(char *str, int *px, int *py){
 int RigaColonna(int rx, int ry, int rgx, int rgy){
   int mangia=0;
   if (rx==rgx||ry==rgy)
+    mangia=1;
+  return(mangia);
+}
+
+int Diagonali(int rx, int ry, int rgx, int rgy){
+  int mangia=0;
+  if((rx+ry==rgx+rgy) || (rx-ry==rgx-rgy))
     mangia=1;
   return(mangia);
 }
