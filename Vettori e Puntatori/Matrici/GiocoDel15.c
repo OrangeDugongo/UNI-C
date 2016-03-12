@@ -26,7 +26,7 @@ int main(){
   int scelta, count=0, mat[DIM][DIM]={{1,2,3,4},{5,6,7,8},{9,10,15,11},{13,14,16,12}};
   //int scelta, count=0, mat[DIM][DIM]={{12,11,6,5},{13,2,9,4},{3,1,16,7},{15,8,14,10}};
   srand(time(NULL));
-  //Genesi(mat);
+  //Genesis(mat);
   do{
     Print(mat);
     do{
@@ -99,7 +99,7 @@ void Replace(int mat[DIM][DIM], int scelta){
   mat[b_i][b_j]=16;
 }
 
-void Genesi(int *p){
+void Genesis(int *p){
   int i, j, ok;
   for(i=0;i<DIM*DIM;i++){
     ok=1;
