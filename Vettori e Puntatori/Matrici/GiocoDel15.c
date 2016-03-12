@@ -14,14 +14,18 @@ Le mosse possibili sono: 2, 1, 7, 3. Se il giocatore sceglie la mossa 3, le moss
 diventano: 3, 10, 15, 14
 **/
 #include <stdio.h>
+#include <time.h>
 #define DIM 4
 int Win(int *);
 int Giocabile(int mat[DIM][DIM], int);
 void Print(int mat[DIM][DIM]);
 void Replace(int mat[DIM][DIM], int);
+void Genesi(int *p);
 
 int main(){
   int mat[DIM][DIM], scelta;
+  srand(time(NULL));
+  Genesi(mat);
   do{
 
     Print(mat);
@@ -30,6 +34,7 @@ int main(){
       scanf("%d", &scelta);
     }while(!Giocabile(mat, scelta));
 
+    Replace(mat, scelta);
   }while(!Win(mat));
 }
 
@@ -71,4 +76,36 @@ int Giocabile(int mat[DIM][DIM], int scelta){
   if(vet[0]==scelta || vet[1]==scelta || vet[2]==scelta || vet[3]==scelta)
     giocabile=1;
   return(giocabile);
+}
+
+void Replace(int mat[DIM][DIM], int scelta){
+  int i, j, a_i, a_j, b_i, b_j;
+  for(i=0;i<DIM;i++){
+    for(j=0;j<DIM;j++){
+      if(mat[i][j]==16){
+        a_i=i;
+        a_j=j;
+      }
+      if(mat[i][j]==scelta){
+        b_i=i;
+        b_j=j;
+      }
+    }
+  }
+  mat[a_i][a_j]=scelta;
+  mat[b_i][b_j]=16;
+}
+
+void Genesi(int *p){
+  int i, j, ok;
+  for(i=0;i<DIM*DIM;i++){
+    ok=1;
+    do{
+      *(p+i)=rand()%16+1;
+      for(j=0;j<i;j++){
+        if(*(p+i)==*(p+j))
+          ok=0;
+      }
+    }while(!ok);
+  }
 }
