@@ -3,24 +3,38 @@
 #include <ctype.h>
 void Read(char *);
 void Copy(char *, char *);
-void Check(char *s, char *d, char c);
+int Check(char *s, char *d, char c);
 int Win(char *s, char *d);
+void Life(int sum);
 const int MAX = 80;
 
 int main(){
   char f[MAX], fIndovina[MAX], c;
+  int life=3, j;
 
+  printf("si consiglia di ridurre l'altezza della shell.\n");
   printf("Giocatore 1: Inserisci la frase: ");
   Read(f);
   Copy(f, fIndovina);
+  printf("\n\n\n\n\n\n");
   do{
     printf("Indovina la frase: %s", fIndovina);
-    printf("\nGiocatore 2: tentativo: ");
-    __fpurge(stdin);
-    scanf("%c", &c);
-    Check(f, fIndovina, c);
-  }while(!Win(f, fIndovina));
-  printf("\n%s\nYou Win!", fIndovina);
+
+    do{
+      printf("\nGiocatore 2 ");
+      Life(life);
+      printf(": tentativo: ");
+      __fpurge(stdin);
+      scanf("%c", &c);
+    }while(!isalpha(c));
+
+    life-=Check(f, fIndovina, c);
+  }while(!(j=Win(f, fIndovina)) && life>=0);
+
+  if(j)
+    printf("\n%s\nYou Win!", fIndovina);
+  else
+    printf("\nYou lose!");
 }
 
 void Read(char *p){
@@ -37,12 +51,15 @@ void Copy(char *s, char *d){
   }
 }
 
-void Check(char *s, char *d, char c){
-  int i;
+int Check(char *s, char *d, char c){
+  int i, check=1;
   for(i=0;*(s+i)!='\0';i++){
-    if(c==*(s+i))
+    if(c==*(s+i)){
       *(d+i)=*(s+i);
+      check=0;
+    }
   }
+  return(check);
 }
 
 int Win(char *s, char *d){
@@ -52,4 +69,16 @@ int Win(char *s, char *d){
       win=0;
   }
   return(win);
+}
+
+void Life(int sum){
+  switch(sum){
+    case 1: printf("<3");
+      break;
+    case 2: printf("<3 <3");
+      break;
+    case 3: printf("<3 <3 <3");
+      break;
+    default: printf("last chance");
+  }
 }
