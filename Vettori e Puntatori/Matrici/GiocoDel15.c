@@ -23,25 +23,28 @@ void Replace(int mat[DIM][DIM], int);
 void Genesi(int *p);
 
 int main(){
-  int mat[DIM][DIM], scelta;
+  int scelta, count=0, mat[DIM][DIM]={{1,2,3,4},{5,6,7,8},{9,10,15,11},{13,14,16,12}};
+  //int scelta, count=0, mat[DIM][DIM]={{12,11,6,5},{13,2,9,4},{3,1,16,7},{15,8,14,10}};
   srand(time(NULL));
-  Genesi(mat);
+  //Genesis(mat);
   do{
-
     Print(mat);
     do{
       printf("Inserisci il numero che vuoi spostare: ");
       scanf("%d", &scelta);
     }while(!Giocabile(mat, scelta));
-
+    count++;
     Replace(mat, scelta);
   }while(!Win(mat));
+  printf("\n   You Win!\n");
+  Print(mat);
+  printf("\nHai completato il puzzle in %d mosse.", count);
 }
 
 int Win(int *p){
   int i, ordinata=1;
-  for(i=1;i<DIM*DIM;i++){
-    if(*p>*(p+i))
+  for(i=0;i<DIM*DIM-1;i++){
+    if(*(p++)>*(p))
       ordinata=0;
   }
   return(ordinata);
@@ -52,9 +55,9 @@ void Print(int mat[DIM][DIM]){
   for(i=0;i<DIM;i++){
     for(j=0;j<DIM;j++){
       if(mat[i][j]==16)
-        printf(" ");
+        printf("   ");
       else
-        printf("%2d", mat[i][j]);
+        printf("%3d", mat[i][j]);
     }
     printf("\n");
   }
@@ -96,7 +99,7 @@ void Replace(int mat[DIM][DIM], int scelta){
   mat[b_i][b_j]=16;
 }
 
-void Genesi(int *p){
+void Genesis(int *p){
   int i, j, ok;
   for(i=0;i<DIM*DIM;i++){
     ok=1;
