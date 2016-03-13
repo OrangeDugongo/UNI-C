@@ -4,6 +4,7 @@
 void Read(char *);
 void Copy(char *, char *);
 void Check(char *s, char *d, char c);
+int Win(char *s, char *d);
 const int MAX = 80;
 
 int main(){
@@ -18,7 +19,8 @@ int main(){
     __fpurge(stdin);
     scanf("%c", &c);
     Check(f, fIndovina, c);
-  }while(1);
+  }while(!Win(f, fIndovina));
+  printf("\n%s\nYou Win!", fIndovina);
 }
 
 void Read(char *p){
@@ -41,4 +43,13 @@ void Check(char *s, char *d, char c){
     if(c==*(s+i))
       *(d+i)=*(s+i);
   }
+}
+
+int Win(char *s, char *d){
+  int win=1, i;
+  for(i=0;*(s+i)!='\0' && win==1;i++){
+    if(*(s+i)!=*(d+i))
+      win=0;
+  }
+  return(win);
 }
