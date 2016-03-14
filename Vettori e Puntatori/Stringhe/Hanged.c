@@ -54,7 +54,7 @@ void Copy(char *s, char *d){
 int Check(char *s, char *d, char c){
   int i, check=1;
   for(i=0;*(s+i)!='\0';i++){
-    if(c==*(s+i)){
+    if(tolower(c)==*(s+i) || toupper(c)==*(s+i)){
       *(d+i)=*(s+i);
       check=0;
     }
