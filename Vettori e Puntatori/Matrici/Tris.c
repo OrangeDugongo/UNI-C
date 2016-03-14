@@ -6,20 +6,19 @@ void Print();
 int Giocabili(int r, int c);
 void Mossa(int *r, int *c, int player);
 void Replace(int r, int c, int player);
+void Turno(int r, int c, int player);
 int Righe(int *p);
 int Colonne(int *p);
 int Diagonali(int *p);
 
 int main(){
-  int r, c, sum;
+  int r, c, sum, count=0;
+
   do{
-    Print();
-    Mossa(&r, &c, 1);
-    Replace(r, c, 1);
-    Print();
-    Mossa(&r, &c, 2);
-    Replace(r, c, 2);
+    Turno(r, c, count++%2+1);
   }while(!Righe(&sum) && !Colonne(&sum) && !Diagonali(&sum));
+  
+  Print();
   if(sum<0)
     printf("Ha vinto il giocatore 1");
   else
@@ -107,4 +106,10 @@ int Diagonali(int *p){
   }
   *p=sum;
   return(win);
+}
+
+void Turno(int r, int c, int player){
+  Print();
+  Mossa(&r, &c, player);
+  Replace(r, c, player);
 }
