@@ -20,13 +20,11 @@ int Win(int *);
 int Giocabile(int mat[DIM][DIM], int);
 void Print(int mat[DIM][DIM]);
 void Replace(int mat[DIM][DIM], int);
-void Genesi(int *p);
+void Genesis(int *p);
 
 int main(){
-  int scelta, count=0, mat[DIM][DIM]={{1,2,3,4},{5,6,7,8},{9,10,15,11},{13,14,16,12}};
-  //int scelta, count=0, mat[DIM][DIM]={{12,11,6,5},{13,2,9,4},{3,1,16,7},{15,8,14,10}};
-  srand(time(NULL));
-  //Genesis(mat);
+  int scelta, count=0, mat[DIM][DIM];//={{1,2,3,4},{5,6,7,8},{9,10,15,11},{13,14,16,12}};//test vittoria
+  Genesis(mat);
   do{
     Print(mat);
     do{
@@ -102,10 +100,10 @@ void Replace(int mat[DIM][DIM], int scelta){
 void Genesis(int *p){
   int i, j, ok;
   for(i=0;i<DIM*DIM;i++){
-    ok=1;
     do{
+      ok=1;
       *(p+i)=rand()%16+1;
-      for(j=0;j<i;j++){
+      for(j=0;j<i && ok==1;j++){
         if(*(p+i)==*(p+j))
           ok=0;
       }
