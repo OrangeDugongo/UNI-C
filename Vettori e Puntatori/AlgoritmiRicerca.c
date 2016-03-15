@@ -45,7 +45,7 @@ int RicercaBinaria(int lista[], int n, int x, int *count){
     (*count)++;
     p = (h + k) / 2;
     if(lista[p] == x)
-      return p; // valore x trovato alla posizione m
+      return p;
     if(lista[p] < x)
       h = p + 1;
     else
