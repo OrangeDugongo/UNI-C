@@ -9,7 +9,6 @@ int main(){
 
   Inserisci(nome);
   Up(nome);
-  printf("%s", nome);
 }
 
 void Inserisci(char *p){
