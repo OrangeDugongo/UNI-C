@@ -111,18 +111,13 @@ void PrintStudente(Studente a[], Esame e[]){
 }
 
 void Menu(Studente a[], Esame e[]){
-  int menu, continua;
-  do{
-    printf("Inserisci 1 per avere una panoramica della classe o 2 per percare un singolo studente: ");
-    scanf("%d", &menu);
-    switch (menu){
-      case 1: PrintAula(a, e);
-        break;
-      case 2: PrintStudente(a,e);
-        break;
-    }
-    
-    printf("y per continuare.");
-    scanf("%d", &continua);
-  }while(continua==89 || continua==121);
+  int menu;
+  printf("Inserisci 1 per avere una panoramica della classe o 2 per per cercare un singolo studente: ");
+  scanf("%d", &menu);
+  switch (menu){
+    case 1: PrintAula(a, e);
+      break;
+    case 2: PrintStudente(a,e);
+      break;
+  }
 }
