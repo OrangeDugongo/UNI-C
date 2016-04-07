@@ -19,6 +19,7 @@ typedef struct{
 
 
 
+
 int Search(Studente a[], int mat){
   int i;
   for(i=0;i<AULA;i++)
@@ -27,10 +28,10 @@ int Search(Studente a[], int mat){
   return(-1);
 }
 
-int Controllo( Studente a[], int i){
+int Esiste( Studente a[], int mat, int i){
   int j;
   for(j=0;j<i;j++)
-    if(a[j].matricola==a[i].matricola)
+    if(a[j].matricola==mat)
       return(1);
   return(0);
 }
@@ -53,14 +54,6 @@ float Media(int mat, Esame e[]){
   return(media/count);
 }
 
-int Check(Studente a[], int mat){
-  int i;
-  for(i=0;i<AULA;i++)
-    if(a[i].matricola==mat)
-      return(0);
-  return(1);
-}
-
 void InserisciAula(Studente a[]){
   int i;
   for(i=0;i<AULA;i++){
@@ -71,7 +64,7 @@ void InserisciAula(Studente a[]){
     do{
       printf("Inserisci il numero di matricola del %d° studente: ", i+1);
       scanf("%d", &a[i].matricola);
-    }while(Controllo(a, i));
+    }while(Esiste(a, a[i].matricola, i));
     printf("\n-----------------\n\n");
   }
 }
@@ -88,7 +81,7 @@ void InserisciEsami(Esame e[], Studente a[]){
     do{
       printf("Inserisci il numero di matricola dello studente: ");
       scanf("%d", &e[i].matricola);
-    }while(Check(a, e[i].matricola));
+    }while(!Esiste(a, e[i].matricola, AULA));
     printf("\n-----------------\n\n");
   }
 }
@@ -100,9 +93,9 @@ void PrintAula(Studente a[], Esame e[]){
 }
 
 void PrintStudente(Studente a[], Esame e[]){
-  int mat, j, i=0;
+  int mat, j=0;
   do{
-    if(i++>0)
+    if(j<0)
       printf("Lo studente non esiste.\n");
     printf("inserisci il numero di matricola dello studente: ");
     scanf("%d", &mat);
@@ -112,7 +105,7 @@ void PrintStudente(Studente a[], Esame e[]){
 
 void Menu(Studente a[], Esame e[]){
   int menu;
-  printf("Inserisci 1 per avere una panoramica della classe o 2 per per cercare un singolo studente: ");
+  printf("Inserisci 1 per avere una panoramica della classe o 2 per cercare un singolo studente: ");
   scanf("%d", &menu);
   switch (menu){
     case 1: PrintAula(a, e);

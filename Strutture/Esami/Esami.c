@@ -11,7 +11,7 @@ int main(){
   InserisciEsami(esame, aula);
   do{
     Menu(aula, esame);
-    printf("0 per interrompere: ");
+    printf("\n0 per interrompere: ");
     scanf("%d", &continua);
   }while(continua);
 
