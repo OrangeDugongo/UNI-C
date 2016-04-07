@@ -103,10 +103,7 @@ void PrintStudente(Studente a[], Esame e[]){
   printf("Lo studente %s %s ha sostenuto %d esami con la media di %.2f.\n", a[j].nome, a[j].cognome, Count(mat, e), Media(mat, e));
 }
 
-void Menu(Studente a[], Esame e[]){
-  int menu;
-  printf("Inserisci 1 per avere una panoramica della classe o 2 per cercare un singolo studente: ");
-  scanf("%d", &menu);
+void Menu(Studente a[], Esame e[], int menu){
   switch (menu){
     case 1: PrintAula(a, e);
       break;

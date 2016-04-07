@@ -5,16 +5,17 @@
 int main(){
   Studente aula[AULA];
   Esame esame[ESAMI];
-  int continua;
+  int menu;
 
   InserisciAula(aula);
   InserisciEsami(esame, aula);
   do{
-    Menu(aula, esame);
-    printf("\n0 per interrompere: ");
-    scanf("%d", &continua);
-  }while(continua);
-
+    printf("Inserisci 1 per avere una panoramica della classe\n2 per cercare un singolo studente\n0 per terminare: ");
+    scanf("%d", &menu);
+    Menu(aula, esame, menu);
+    if(menu)
+      printf("\n-------------\n\n");
+  }while(menu);
 
   __fpurge(stdin);
   getchar();
