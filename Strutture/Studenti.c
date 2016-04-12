@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
     printf("Quanti studenti vuoi inserire: ");
     scanf("%d", &riemp);
   }while(riemp<1);
-  aula=(struct Studente*) calloc(riemp, sizeof(aula));
+  aula=(struct Studente*) calloc(riemp, sizeof(struct Studente));
   Inserimento(riemp, aula);
 
   do{
