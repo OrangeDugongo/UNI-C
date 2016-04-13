@@ -65,9 +65,9 @@ int Ricerca (char cgn[], struct Studenti a[], int num){
 void Stampa (struct Studenti a[], int riemp){
   int i;
     for (i=0; i<riemp; i++){
-      printf ("\n\n Nome; %s", a[i]. nome);
-      printf ("\n\n Cognome: %s", a[i]. cognome);
-      printf ("\n\n Data: %s", a[i]. data);
+      printf ("\n\n Nome: %s", a[i].nome);
+      printf ("\n\n Cognome: %s", a[i].cognome);
+      printf ("\n\n Data: %s", a[i].data);
       printf ("\n\n Esami sostenuti: %d", a[i].esami_sostenuti);
       printf ("\n\n");
     }
@@ -80,7 +80,7 @@ struct Studenti* Inserisci (struct Studenti sA [], int *pr, int *pd){
     sA=(struct Studenti*) realloc(sA, (*pd+=SLOT));
 
   printf("\nInserisci il nome ");
-  scanf ("%s",buffer); // non si mette & perch� gi� punta alla testa dell'array
+  scanf ("%s", buffer); // non si mette & perch� gi� punta alla testa dell'array
   sA[*pr].nome=(char *) malloc((strlen(buffer)+1)* sizeof(char));
   strcpy(sA[*pr].nome, buffer);
 
