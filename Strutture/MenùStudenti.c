@@ -50,50 +50,8 @@ struct Studenti* Inserisci (struct Studenti [], int*, int*);
           break;
       default: printf("il valore inserito non e' valido\n");
     }
-
- } while (menu);
-
-
- // printf ("Quanti studenti vuoi caricare? \n");
-// scanf ("%d", &numero);
-
-/* for (i=0; i<numero; i++){
-
-    printf("\nInserisci il nome ");
-    scanf ("%s",buffer); // non si mette & perch� gi� punta alla testa dell'array
-
-    Aula[i].nome=(char*) malloc((strlen(buffer)+1)* sizeof(char)); //(char*) � un'oprazione di casting
-    strcpy(Aula[i].nome, buffer);
-
-    printf("\nInserisci il cognome ");
-    scanf ("%s", buffer);
-
-    Aula[i].cognome=(char *) malloc ((strlen (buffer)+1)* sizeof(char));
-    strcpy (Aula[i].cognome, buffer);
-
-    printf("\nInserisci la data (gg/mm/aaaa) ");
-    scanf ("%s", buffer);
-
-    Aula[i].data=(char *) malloc ((strlen (buffer)+1)* sizeof(char));
-    strcpy (Aula[i].data, buffer);
-
-    printf("\nInserisci il numero di esami sostenuti ");
-    scanf ("%d", &(Aula[i].esame_sostenuti));
-
- }
- */
- /*printf("\n Dammi il cognome che vuoi ricercare: ");
- scanf ("%s", rice);
-
- trovato= Ricerca (rice, Aula, numero);
-
- if (trovato!=-1) {
-    printf ("trovato e l'indice e': %d\n\n", trovato);
- }
- else printf("Non trovato\n\n");
-*/
-
- }
+  }while (menu);
+}
 
 int Ricerca (char cgn[], struct Studenti a[], int num){
   int i;
