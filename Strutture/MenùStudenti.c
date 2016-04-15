@@ -77,7 +77,7 @@ struct Studenti * Inserisci (struct Studenti sA [], int *pr, int *pd){
   char buffer [200];
 
   if ((*pr)==(*pd))
-    sA=(struct Studenti*) realloc(sA, ((*pd)+=SLOT));
+    sA=(struct Studenti*) realloc(sA, (*pd+=SLOT));
 
   printf("\nInserisci il nome ");
   scanf ("%s", buffer); // non si mette & perch� gi� punta alla testa dell'array
