@@ -20,34 +20,34 @@ int Ricerca (char [], struct Studenti [], int);
 void Stampa (struct Studenti [], int);
 struct Studenti* Inserisci (struct Studenti [], int*, int*);
 
- int main (int argc, char *argv[]){
-   struct Studenti *Aula;
-   int menu, riemp=0, dim=SLOT;
+int main (int argc, char *argv[]){
+  struct Studenti *Aula;
+  int menu, riemp=0, dim=SLOT;
 
-   Aula= (struct Studenti*) malloc(SLOT*sizeof(struct Studenti));
+  Aula= (struct Studenti*) malloc(SLOT*sizeof(struct Studenti));
 
-   do{
-     printf ("    ----------Menu'----------");
-     printf ("\n 1. Inserisci nuovo studente");
-     printf("\n 2. Ricerca studente");
-     printf("\n 3. Modifica studente");
-     printf ("\n 4. Stampa");
-     printf("\n 0. Uscita dal rogramma");
-     printf ("\n Quale funzione vuoi attivare: ");
-     scanf ("%d", &menu);
+  do{
+    printf ("    ----------Menu'----------");
+    printf ("\n 1. Inserisci nuovo studente");
+    printf("\n 2. Ricerca studente");
+    printf("\n 3. Modifica studente");
+    printf ("\n 4. Stampa");
+    printf("\n 0. Uscita dal rogramma");
+    printf ("\n Quale funzione vuoi attivare: ");
+    scanf ("%d", &menu);
 
-     switch (menu) {
-       case 1:Aula=Inserisci(Aula, &riemp, &dim); // Aula riemp e dim sono parametri di input/output per cui si passa per indirizzo
-          break;
-       case 2:
-          break;
-       case 3:
-          break;
-       case 4: printf("\n stampa della struttura: \n\n");
-               Stampa (Aula, riemp);
-          break;
-       case 5:
-          break;
+    switch (menu) {
+      case 1:Aula=Inserisci(Aula, &riemp, &dim); // Aula riemp e dim sono parametri di input/output per cui si passa per indirizzo
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4: printf("\n stampa della struttura: \n\n");
+              Stampa (Aula, riemp);
+        break;
+      case 5:
+        break;
       default: printf("il valore inserito non e' valido\n");
     }
   }while (menu);
@@ -73,11 +73,11 @@ void Stampa (struct Studenti a[], int riemp){
     }
 }
 
-struct Studenti* Inserisci (struct Studenti sA [], int *pr, int *pd){
+struct Studenti * Inserisci (struct Studenti sA [], int *pr, int *pd){
   char buffer [200];
 
   if ((*pr)==(*pd))
-    sA=(struct Studenti*) realloc(sA, (*pd+=SLOT));
+    sA=(struct Studenti*) realloc(sA, ((*pd)+=SLOT));
 
   printf("\nInserisci il nome ");
   scanf ("%s", buffer); // non si mette & perch� gi� punta alla testa dell'array
