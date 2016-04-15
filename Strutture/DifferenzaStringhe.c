@@ -1,17 +1,21 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
+#include <stdio_ext.h>
 
+typedef struct carattere{
+  char c;
+  struct carattere *next;
+}Carattere;
 
 int main(){
-  int i, j, h=1, ok;
-  char str1[100], str2[100], *str;
+  unsigned int i, j, ok;
+  char str1[100], str2[100];
+  Carattere *root=NULL, *lista;
   printf("inserisci la prima stringa: ");
   scanf("%s", str1);
   printf("inserisci la seconda stringa: ");
   scanf("%s", str2);
-
-  str=(char*)malloc(h*sizeof(char));
   if(strcmp(str1, str2)){
     for(i=0;i<strlen(str1);i++){
       ok=1;
@@ -19,15 +23,21 @@ int main(){
         if(str1[i]==str2[j])
           ok=0;
       if(ok){
-        str[h-1]=str1[i];
-        str=(char*)realloc(str, ++h);
+        lista =(Carattere *)malloc(sizeof(Carattere));
+        lista->c=str1[i];
+        lista->next=root;
+        root=lista;
       }
     }
-    str[h-1]='\0';
-    printf("\n\nStringa: %s", str);
+    while(root){
+      printf("%c --> ", root->c);
+      root=root->next;
+    }
+    printf("FINE");
   }else
     printf("Le due stringhe sono uguali");
 
   __fpurge(stdin);
   getchar();
 }
+
