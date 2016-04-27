@@ -2,10 +2,6 @@
 #define N 3
 #define M 4
 
-/*typedef struct{
-  char *partita[4];
-  char *riposo;
-}*/
 int main(){
   FILE *src, *dest;
   int i, j, casa, trasferta, g;
