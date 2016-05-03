@@ -10,36 +10,32 @@ typedef struct token{
 } Token;
 
 void Print(Token *);
+int Trovato(Token *, int);
 
 int main(){
   FILE *fp;
-  Token *head=NULL;
+  Token *head=NULL, *l, *pre, *cur;
   int j;
   fp=fopen("Numeri", "r");
 
   while(fscanf(fp, "%d", &j) != EOF){
-    Token *cur=head;
-    Token *pre=NULL;
-    if(!cur || j<cur->i){
-      Token *n= (Token *)malloc(sizeof(Token));
-      n->i=j;
-      n->nOcc=1;
-      n->next=head;
-      head=n;
-    }else{
-      while(cur && cur->i<=j){
-        pre=cur;
-        cur=cur->next;
-      }
-        if(cur->i==j)
-          (cur->nOcc)++;
-        else{
-          Token *n = (Token *)malloc(sizeof(Token));
-          n->i=j;
-          n->nOcc=1;
-          pre->next=n;
-          n->next=cur;
+    if(!Trovato(head, j)){
+      pre=NULL;
+      cur=head;
+      l=(Token *)malloc(sizeof(Token));
+      l->i=j;
+      l->nOcc=1;
+      if(!cur || j<cur->i){
+        l->next=head;
+        head=l;
+      }else{
+        while(cur && j>cur->i){
+          pre=cur;
+          cur=cur->next;
         }
+        pre->next=l;
+        l->next=cur;
+      }
     }
   }
   Print(head);
@@ -48,10 +44,22 @@ int main(){
   getchar();
 }
 
+int Trovato(Token *head, int j){
+  int trovato=0;
+  while(head && head->i<=j){
+    if(head->i==j){
+      (head->nOcc)++;
+      trovato=1;
+    }
+    head=head->next;
+  }
+  return(trovato);
+}
+
 void Print(Token *h){
   Token *head=h;
   while(head){
-    printf("%d = %d volte   --->   ", head->i, head->nOcc);
+    printf("%d = %d volte\n", head->i, head->nOcc);
     head=head->next;
   }
   printf("FINE");
