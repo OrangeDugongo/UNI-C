@@ -24,7 +24,7 @@ int main(){
     while(fscanf(fp, "%s", buffer)!=EOF)
       if(!Trovato(head, buffer))
         Inserisci(&head, buffer);
-      Print(head, NULL);
+      Print(head, stdout);
   }else
     printf("Impossibile aprire il file.");
 
