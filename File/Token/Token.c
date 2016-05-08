@@ -20,30 +20,25 @@ int main(){
   fp=fopen(buffer, "r");
 
   while(fscanf(fp, "%s", buffer) != EOF){
-    Token *cur=head;
-    Token *pre=NULL;
-    if(!cur || strcmp(buffer, cur->stringa)<0){
-      Token *n = (Token *)malloc(sizeof(Token));
-      n->stringa= (char *)malloc((strlen(buffer)+1)*sizeof(char));
-      strcpy(n->stringa, buffer);
-      n->nOcc=1;
-      n->next=head;
-      head=n;
-    }else{
-      while(cur && strcmp(buffer, cur->stringa)>0){
-        pre=cur;
-        cur=cur->next;
+    Token *pre=NULL, *cur=head;
+    while(cur && strcmp(buffer, cur->stringa)>0){
+      pre=cur;
+      cur=cur->next;
+    }
+    if(cur && !strcmp(buffer, cur->stringa))
+      (cur->nOcc)++;
+    else{
+      Token *New=(Token *)malloc(sizeof(Token));
+      New->stringa=(char *)calloc(strlen(buffer)+1, sizeof(char));
+      strcpy(New->stringa, buffer);
+      New->nOcc=1;
+      if(!pre){
+        New->next=head;
+        head=New;
+      }else{
+        New->next=cur;
+        pre->next=New;
       }
-        if(cur && !strcmp(buffer, cur->stringa))
-          (cur->nOcc)++;
-        else{
-          Token *n = (Token *)malloc(sizeof(Token));
-          n->stringa= (char *)malloc((strlen(buffer)+1)*sizeof(char));
-          strcpy(n->stringa, buffer);
-          n->nOcc=1;
-          n->next=cur;
-          pre->next=n;
-        }
     }
   }
   Print(head);
