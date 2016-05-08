@@ -6,61 +6,61 @@ dei caratteri presenti nella linea di input.
 
 #include <stdio.h>
 #include <string.h>
-#include <malloc.h>
 #include <ctype.h>
+#include <malloc.h>
 #include <stdio_ext.h>
 
-typedef struct nodo{
+typedef struct Nodo{
   char c;
-  int i;
-  struct nodo *next;
-}Nodo;
+  int n;
+  struct Nodo *next;
+} Nodo;
 
-int Controllo(char c);
-int k=0;
-char str[50];
+typedef Nodo* NodoSTAR;
+
+void Inserimento(char, NodoSTAR *);
+void Print(NodoSTAR);
 
 int main(){
   char buffer[200];
-  unsigned int i, j;
-  int count;
-  Nodo *root=NULL, *l;
-
-  printf("Inserisci la frase: ");
+  unsigned int i;
+  NodoSTAR head=NULL;
+  printf("Inserisci una frase: ");
   gets(buffer);
-  for(i=0;i<strlen(buffer);i++){
-    if(Controllo(buffer[i]) || !isalpha(buffer[i]))
-      continue;
+  for(i=0;i<strlen(buffer);i++)
+    if(isalpha(buffer[i]))
+      Inserimento(buffer[i], &head);
 
-    count=0;
-    for(j=i;j<strlen(buffer);j++)
-      if(buffer[i]==buffer[j])
-        count++;
-
-    l=(Nodo *)malloc(sizeof(Nodo));
-    l->c=buffer[i];
-    l->i=count;
-    l->next=root;
-    root=l;
-  }
-
-  while(root!=NULL){
-    printf("%c = %d   --->   ", root->c, root->i);
-    root=root->next;
-  }
-  printf("FINE");
-
+  Print(head);
   __fpurge(stdin);
   getchar();
 }
 
-int Controllo(char c){
-  int ok=1, i;
-  for(i=0;i<k && ok;i++)
-    if(str[i]==c)
-      ok=0;
+void Inserimento(char c, NodoSTAR *head){
+  NodoSTAR cur=*head, pre=NULL;
+  while(cur && c>cur->c){
+    pre=cur;
+    cur=cur->next;
+  }
+  if(cur && c==cur->c)
+    (cur->n)++;
+  else{
+    NodoSTAR New=(NodoSTAR)malloc(sizeof(Nodo));
+    New->c=c;
+    New->n=1;
+    if(!pre){
+      New->next=*head;
+      *head=New;
+    }else{
+      New->next=cur;
+      pre->next=New;
+    }
+  }
+}
 
-  if(ok)
-    str[k++]=c;
-  return(!ok);
+void Print(NodoSTAR head){
+  while(head){
+    printf("%c=%d volte.\n", head->c, head->n);
+    head=head->next;
+  }
 }
