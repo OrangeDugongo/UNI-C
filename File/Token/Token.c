@@ -30,19 +30,19 @@ int main(){
       n->next=head;
       head=n;
     }else{
-      while(cur && strcmp(buffer, cur->stringa)>=0){
+      while(cur && strcmp(buffer, cur->stringa)>0){
         pre=cur;
         cur=cur->next;
       }
-        if(!strcmp(buffer, cur->stringa))
+        if(cur && !strcmp(buffer, cur->stringa))
           (cur->nOcc)++;
         else{
           Token *n = (Token *)malloc(sizeof(Token));
           n->stringa= (char *)malloc((strlen(buffer)+1)*sizeof(char));
           strcpy(n->stringa, buffer);
           n->nOcc=1;
-          pre->next=n;
           n->next=cur;
+          pre->next=n;
         }
     }
   }
