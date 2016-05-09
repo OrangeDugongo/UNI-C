@@ -2,11 +2,11 @@
 #include <string.h>
 #include <malloc.h>
 
-struct Studente {
-    char* Cognome;
+typedef struct Studente {
+    char* cognome;
     int Esami;
-    struct Studente* link;
-};
+    struct Studente* next;
+} Studente;
 
 void Inserisci(char*, int);
 void InserisciCoda(char*, int);
@@ -17,12 +17,12 @@ void Inseriscio(char*, int);
 void Salva(FILE *);
 int Elimina(char *);
 
-struct Studente* lista_s = NULL;
+Studente* head = NULL;
 
 int main(int argc, char* argv[])
 {
-    int menu, esami, cesami;
-    char buffer[200];
+    int menu, Esami, cEsami;
+    char bufferer[200];
     char nomef[256];
     FILE *db;
 
@@ -37,11 +37,11 @@ int main(int argc, char* argv[])
     }
     else
     {
-        while(fscanf(db, "%s", buffer) != EOF)
+        while(fscanf(db, "%s", bufferer) != EOF)
         {
-            fscanf(db, "%d", &esami);
-            fscanf(db, "%s", &nomef);
-            Inseriscio(buffer, esami);
+            fscanf(db, "%d", &Esami);
+            fscanf(db, "%s", nomef);
+            Inseriscio(bufferer, Esami);
         }
     }
 
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
         printf("\n3: Inserisci studente ordinatamente");
         printf("\n4: Stampa studenti");
         printf("\n5: Cerca studente");
-        printf("\n6: Cerca studenti per numero di esami");
+        printf("\n6: Cerca studenti per numero di Esami");
         printf("\n7: Elimina");
         printf("\n8: Salva ed esci");
         printf("\n");
@@ -67,26 +67,26 @@ int main(int argc, char* argv[])
         {
             case 1:
                 printf("\nInserisci il cognome: ");
-                scanf("%s", buffer);
-                printf("\nInserisci il numero di esami: ");
-                scanf("%d", &esami);
-                Inserisci(buffer, esami);
+                scanf("%s", bufferer);
+                printf("\nInserisci il numero di Esami: ");
+                scanf("%d", &Esami);
+                Inserisci(bufferer, Esami);
                 break;
 
             case 2:
                 printf("\nInserisci il cognome: ");
-                scanf("%s", buffer);
-                printf("\nInserisci il numero di esami: ");
-                scanf("%d", &esami);
-                InserisciCoda(buffer, esami);
+                scanf("%s", bufferer);
+                printf("\nInserisci il numero di Esami: ");
+                scanf("%d", &Esami);
+                InserisciCoda(bufferer, Esami);
                 break;
 
             case 3:
                 printf("\nInserisci il cognome: ");
-                scanf("%s", buffer);
-                printf("\nInserisci il numero di esami: ");
-                scanf("%d", &esami);
-                Inseriscio(buffer, esami);
+                scanf("%s", bufferer);
+                printf("\nInserisci il numero di Esami: ");
+                scanf("%d", &Esami);
+                Inseriscio(bufferer, Esami);
                 break;
 
             case 4:
@@ -95,19 +95,19 @@ int main(int argc, char* argv[])
 
             case 5:
                 printf("\nInserisci il cognome da ricercare: ");
-                scanf("%s", buffer);
-                Cerca(buffer);
+                scanf("%s", bufferer);
+                Cerca(bufferer);
                 break;
 
             case 6:
-                printf("\nInserisci il numero di esami: ");
-                scanf("%d", &cesami);
-                CercaE(cesami);
+                printf("\nInserisci il numero di Esami: ");
+                scanf("%d", &cEsami);
+                CercaE(cEsami);
                 break;
 
             case 7:printf("\nInserisci il cognome: ");
-                   scanf("%s", buffer);
-                   printf("\nsono stati eliminati %d elemnti", Elimina(buffer));
+                   scanf("%s", bufferer);
+                   printf("\nsono stati eliminati %d elemnti", Elimina(bufferer));
                 break;
 
             case 8:
@@ -126,149 +126,149 @@ int main(int argc, char* argv[])
 
 }
 
-int Elimina(char *buffer){
+int Elimina(char *bufferer){
   int n=0;
-  struct Studente *cur=lista_s, *pre=NULL;
-  while(cur && strcmp(buffer, cur->Cognome)>=0)
-    if(!pre && !strcmp(buffer, cur->Cognome)){
-      lista_s=cur->link;
-      free(cur->Cognome);
+  Studente *cur=head, *pre=NULL;
+  while(cur && strcmp(bufferer, cur->cognome)>=0)
+    if(!pre && !strcmp(bufferer, cur->cognome)){
+      head=cur->next;
+      free(cur->cognome);
       free(cur);
       n++;
-      cur=lista_s;
-    }else if(!strcmp(buffer, cur->Cognome)){
-      pre->link=cur->link;
-      free(cur->Cognome);
+      cur=head;
+    }else if(!strcmp(bufferer, cur->cognome)){
+      pre->next=cur->next;
+      free(cur->cognome);
       free(cur);
       n++;
-      cur=pre->link;
+      cur=pre->next;
     }else{
       pre=cur;
-      cur=cur->link;
+      cur=cur->next;
     }
   return(n);
 }
 
-void Inserisci(char* buff, int es)
+void Inserisci(char* buffer, int es)
 {
-    struct Studente* p = (struct Studente*) malloc(sizeof(struct Studente));
+    Studente* p = (Studente*) malloc(sizeof(Studente));
 
-    p->Cognome = (char*) malloc((strlen(buff)+1)*sizeof(char));
+    p->cognome = (char*) malloc((strlen(buffer)+1)*sizeof(char));
 
-    strcpy(p->Cognome, buff);
+    strcpy(p->cognome, buffer);
 
     p->Esami = es;
 
-    p->link = lista_s;
+    p->next = head;
 
-    lista_s = p;
+    head = p;
 }
 
-void InserisciCoda(char* buff, int es)
+void InserisciCoda(char* buffer, int es)
 {
-    struct Studente* cur = lista_s;
-    struct Studente* p = (struct Studente*) malloc(sizeof(struct Studente));
+    Studente* cur = head;
+    Studente* p = (Studente*) malloc(sizeof(Studente));
 
-    p->Cognome = (char*) malloc((strlen(buff)+1)*sizeof(char));
+    p->cognome = (char*) malloc((strlen(buffer)+1)*sizeof(char));
 
-    strcpy(p->Cognome, buff);
+    strcpy(p->cognome, buffer);
 
     p->Esami = es;
 
-    p->link = NULL;
+    p->next = NULL;
 
-    if(!cur) lista_s = p;
+    if(!cur) head = p;
     else
     {
-        while(cur && (cur->link))
+        while(cur && (cur->next))
         {
-            cur = cur->link;
+            cur = cur->next;
         }
 
-        cur->link = p;
+        cur->next = p;
     }
 }
 
 void Stampa()
 {
-    struct Studente* cur = lista_s;
+    Studente* cur = head;
 
     while(cur)
     {
-        printf("\n%s  %d\n", cur->Cognome, cur->Esami);
-        cur = cur->link;
+        printf("\n%s  %d\n", cur->cognome, cur->Esami);
+        cur = cur->next;
     }
 }
 
 void Cerca(char* cgn)
 {
-    struct Studente* cur = lista_s;
+    Studente* cur = head;
 
-    while(cur && strcmp(cur->Cognome, cgn))
+    while(cur && strcmp(cur->cognome, cgn))
     {
-        cur = cur->link;
+        cur = cur->next;
     }
 
     if(!cur) printf("\nStudente non trovato!\n");
-    else printf("\n%s trovato con %d esami\n", cur->Cognome, cur->Esami);
+    else printf("\n%s trovato con %d Esami\n", cur->cognome, cur->Esami);
 }
 
 void CercaE(int es)
 {
-    struct Studente* cur = lista_s;
+    Studente* cur = head;
 
     while(cur)
     {
         if(cur->Esami == es)
         {
-            printf("\nTrovato %s\n", cur->Cognome);
+            printf("\nTrovato %s\n", cur->cognome);
         }
-        cur = cur->link;
+        cur = cur->next;
     }
 }
 
-void Inseriscio(char* buff, int es)
+void Inseriscio(char* buffer, int es)
 {
-    struct Studente* cur = lista_s;
-    struct Studente* prec = NULL;
+    Studente *cur = head;
+    Studente *pre = NULL;
 
-    struct Studente* p = (struct Studente*) malloc(sizeof(struct Studente));
+    Studente *p = (Studente*) malloc(sizeof(Studente));
 
-    p->Cognome = (char*) malloc((strlen(buff)+1)*sizeof(char));
+    p->cognome = (char*) malloc((strlen(buffer)+1)*sizeof(char));
 
-    strcpy(p->Cognome, buff);
+    strcpy(p->cognome, buffer);
 
     p->Esami = es;
 
-    p->link = lista_s;
+    p->next = head;
 
-    if(!cur || (strcmp(cur->Cognome, buff)) > 0)
+    if(!cur || (strcmp(cur->cognome, buffer)) > 0)
     {
-        p->link = lista_s;
-        lista_s = p;
+        p->next = head;
+        head = p;
     }
 
     else
     {
-        while(cur && (strcmp(buff, cur->Cognome)) >= 0)
+        while(cur && (strcmp(buffer, cur->cognome)) >= 0)
         {
-            prec = cur;
-            cur = cur->link;
+            pre = cur;
+            cur = cur->next;
         }
 
-        prec->link = p;
-        p->link = cur;
+        pre->next = p;
+        p->next = cur;
     }
 }
 
 void Salva(FILE *fp)
 {
-    struct Studente* cur = lista_s;
+    Studente *cur = head;
 
     while(cur)
     {
-        fprintf(fp, "%s %d * ", cur->Cognome, cur->Esami);
-        cur = cur->link;
+        fprintf(fp, "%s %d * ", cur->cognome, cur->Esami);
+        cur = cur->next;
     }
 
     fclose(fp);
