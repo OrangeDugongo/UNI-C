@@ -15,6 +15,7 @@ void Cerca(char*);
 void CercaE(int);
 void Inseriscio(char*, int);
 void Salva(FILE *);
+int Elimina(char *);
 
 struct Studente* lista_s = NULL;
 
@@ -56,7 +57,8 @@ int main(int argc, char* argv[])
         printf("\n4: Stampa studenti");
         printf("\n5: Cerca studente");
         printf("\n6: Cerca studenti per numero di esami");
-        printf("\n7: Salva ed esci");
+        printf("\n7: Elimina");
+        printf("\n8: Salva ed esci");
         printf("\n");
         printf("\nInserisci la scelta: ");
         while(scanf("%d", &menu) <= 0) fflush(stdin);
@@ -103,13 +105,18 @@ int main(int argc, char* argv[])
                 CercaE(cesami);
                 break;
 
-            case 7:
+            case 7:printf("\nInserisci il cognome: ");
+                   scanf("%s", buffer);
+                   printf("\nsono stati eliminati %d elemnti", Elimina(buffer));
+                break;
+
+            case 8:
                 break;
 
             default:
                 printf("\nIl valore inserito non e' valido!\n");
         }
-    } while(menu != 7);
+    } while(menu != 8);
 
     printf("Su quale file vuoi salvare?: ");
     scanf("%s", nomef);
@@ -117,6 +124,29 @@ int main(int argc, char* argv[])
 
     Salva(db);
 
+}
+
+int Elimina(char *buffer){
+  int n=0;
+  struct Studente *cur=lista_s, *pre=NULL;
+  while(cur && strcmp(buffer, cur->Cognome)>=0)
+    if(!pre && !strcmp(buffer, cur->Cognome)){
+      lista_s=cur->link;
+      free(cur->Cognome);
+      free(cur);
+      n++;
+      cur=lista_s;
+    }else if(!strcmp(buffer, cur->Cognome)){
+      pre->link=cur->link;
+      free(cur->Cognome);
+      free(cur);
+      n++;
+      cur=pre->link;
+    }else{
+      pre=cur;
+      cur=cur->link;
+    }
+  return(n);
 }
 
 void Inserisci(char* buff, int es)
@@ -237,7 +267,7 @@ void Salva(FILE *fp)
 
     while(cur)
     {
-        fprintf(fp, "%s\n%d\n*\n", cur->Cognome, cur->Esami);
+        fprintf(fp, "%s %d * ", cur->Cognome, cur->Esami);
         cur = cur->link;
     }
 
