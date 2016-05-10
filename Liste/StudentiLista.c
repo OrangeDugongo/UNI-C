@@ -17,38 +17,32 @@ void Inseriscio(char*, int);
 void Salva(FILE *);
 int Elimina(char *);
 
-Studente* head = NULL;
+Studente *head = NULL;
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char *argv[]){
     int menu, Esami, cEsami;
-    char bufferer[200];
+    char buffer[200];
     char nomef[256];
     FILE *db;
 
-    printf("Quale file vuoi caricare?: ");
+    printf("Quale file vuoi caricare: ");
     scanf("%s", nomef);
 
-    db = fopen(nomef, "r");
-    if(!db)
-    {
+
+    if(!(db = fopen(nomef, "r"))){
         printf("\nIl file da te cercato non esiste. Ora lo creo...\n");
         db = fopen(nomef, "w");
-    }
-    else
-    {
-        while(fscanf(db, "%s", bufferer) != EOF)
-        {
+    }else{
+        while(fscanf(db, "%s", buffer) != EOF){
             fscanf(db, "%d", &Esami);
             fscanf(db, "%s", nomef);
-            Inseriscio(bufferer, Esami);
+            Inseriscio(buffer, Esami);
         }
     }
 
     fclose(db);
 
-    do
-    {
+    do{
         printf("\n--------");
         printf("\nMenu':\n");
         printf("\n1: Inserisci studente");
@@ -61,53 +55,47 @@ int main(int argc, char* argv[])
         printf("\n8: Salva ed esci");
         printf("\n");
         printf("\nInserisci la scelta: ");
-        while(scanf("%d", &menu) <= 0) fflush(stdin);
+        while(scanf("%d", &menu) <= 0)
+          fflush(stdin);
 
-        switch(menu)
-        {
-            case 1:
-                printf("\nInserisci il cognome: ");
-                scanf("%s", bufferer);
-                printf("\nInserisci il numero di Esami: ");
-                scanf("%d", &Esami);
-                Inserisci(bufferer, Esami);
+        switch(menu){
+            case 1: printf("\nInserisci il cognome: ");
+                    scanf("%s", buffer);
+                    printf("\nInserisci il numero di Esami: ");
+                    scanf("%d", &Esami);
+                    Inserisci(buffer, Esami);
+               break;
+
+            case 2: printf("\nInserisci il cognome: ");
+                    scanf("%s", buffer);
+                    printf("\nInserisci il numero di Esami: ");
+                    scanf("%d", &Esami);
+                    InserisciCoda(buffer, Esami);
                 break;
 
-            case 2:
-                printf("\nInserisci il cognome: ");
-                scanf("%s", bufferer);
-                printf("\nInserisci il numero di Esami: ");
-                scanf("%d", &Esami);
-                InserisciCoda(bufferer, Esami);
+            case 3: printf("\nInserisci il cognome: ");
+                    scanf("%s", buffer);
+                    printf("\nInserisci il numero di Esami: ");
+                    scanf("%d", &Esami);
+                    Inseriscio(buffer, Esami);
                 break;
 
-            case 3:
-                printf("\nInserisci il cognome: ");
-                scanf("%s", bufferer);
-                printf("\nInserisci il numero di Esami: ");
-                scanf("%d", &Esami);
-                Inseriscio(bufferer, Esami);
+            case 4: Stampa();
                 break;
 
-            case 4:
-                Stampa();
+            case 5: printf("\nInserisci il cognome da ricercare: ");
+                    scanf("%s", buffer);
+                    Cerca(buffer);
                 break;
 
-            case 5:
-                printf("\nInserisci il cognome da ricercare: ");
-                scanf("%s", bufferer);
-                Cerca(bufferer);
-                break;
-
-            case 6:
-                printf("\nInserisci il numero di Esami: ");
-                scanf("%d", &cEsami);
-                CercaE(cEsami);
+            case 6: printf("\nInserisci il numero di Esami: ");
+                    scanf("%d", &cEsami);
+                    CercaE(cEsami);
                 break;
 
             case 7:printf("\nInserisci il cognome: ");
-                   scanf("%s", bufferer);
-                   printf("\nsono stati eliminati %d elemnti", Elimina(bufferer));
+                   scanf("%s", buffer);
+                   printf("\nsono stati eliminati %d elemnti", Elimina(buffer));
                 break;
 
             case 8:
@@ -116,7 +104,7 @@ int main(int argc, char* argv[])
             default:
                 printf("\nIl valore inserito non e' valido!\n");
         }
-    } while(menu != 8);
+    }while(menu != 8);
 
     printf("Su quale file vuoi salvare?: ");
     scanf("%s", nomef);
@@ -126,17 +114,17 @@ int main(int argc, char* argv[])
 
 }
 
-int Elimina(char *bufferer){
+int Elimina(char *buffer){
   int n=0;
   Studente *cur=head, *pre=NULL;
-  while(cur && strcmp(bufferer, cur->cognome)>=0)
-    if(!pre && !strcmp(bufferer, cur->cognome)){
+  while(cur && strcmp(buffer, cur->cognome)>=0)
+    if(!pre && !strcmp(buffer, cur->cognome)){
       head=cur->next;
       free(cur->cognome);
       free(cur);
       n++;
       cur=head;
-    }else if(!strcmp(bufferer, cur->cognome)){
+    }else if(!strcmp(buffer, cur->cognome)){
       pre->next=cur->next;
       free(cur->cognome);
       free(cur);
@@ -149,8 +137,7 @@ int Elimina(char *bufferer){
   return(n);
 }
 
-void Inserisci(char* buffer, int es)
-{
+void Inserisci(char* buffer, int es){
     Studente* p = (Studente*) malloc(sizeof(Studente));
 
     p->cognome = (char*) malloc((strlen(buffer)+1)*sizeof(char));
@@ -164,8 +151,7 @@ void Inserisci(char* buffer, int es)
     head = p;
 }
 
-void InserisciCoda(char* buffer, int es)
-{
+void InserisciCoda(char* buffer, int es){
     Studente* cur = head;
     Studente* p = (Studente*) malloc(sizeof(Studente));
 
@@ -177,60 +163,50 @@ void InserisciCoda(char* buffer, int es)
 
     p->next = NULL;
 
-    if(!cur) head = p;
-    else
-    {
+    if(!cur)
+      head = p;
+    else{
         while(cur && (cur->next))
-        {
             cur = cur->next;
-        }
 
         cur->next = p;
     }
 }
 
-void Stampa()
-{
-    Studente* cur = head;
+void Stampa(){
+    Studente *cur = head;
 
-    while(cur)
-    {
+    while(cur){
         printf("\n%s  %d\n", cur->cognome, cur->Esami);
         cur = cur->next;
     }
 }
 
-void Cerca(char* cgn)
-{
+void Cerca(char* cgn){
     Studente* cur = head;
 
     while(cur && strcmp(cur->cognome, cgn))
-    {
-        cur = cur->next;
-    }
+      cur = cur->next;
 
-    if(!cur) printf("\nStudente non trovato!\n");
-    else printf("\n%s trovato con %d Esami\n", cur->cognome, cur->Esami);
+    if(!cur)
+      printf("\nStudente non trovato!\n");
+    else
+      printf("\n%s trovato con %d Esami\n", cur->cognome, cur->Esami);
 }
 
-void CercaE(int es)
-{
+void CercaE(int es){
     Studente* cur = head;
 
-    while(cur)
-    {
+    while(cur){
         if(cur->Esami == es)
-        {
             printf("\nTrovato %s\n", cur->cognome);
-        }
+
         cur = cur->next;
     }
 }
 
-void Inseriscio(char* buffer, int es)
-{
-    Studente *cur = head;
-    Studente *pre = NULL;
+void Inseriscio(char* buffer, int es){
+    Studente *cur = head, *pre = NULL;
 
     Studente *p = (Studente*) malloc(sizeof(Studente));
 
@@ -242,16 +218,11 @@ void Inseriscio(char* buffer, int es)
 
     p->next = head;
 
-    if(!cur || (strcmp(cur->cognome, buffer)) > 0)
-    {
+    if(!cur || (strcmp(cur->cognome, buffer)) > 0){
         p->next = head;
         head = p;
-    }
-
-    else
-    {
-        while(cur && (strcmp(buffer, cur->cognome)) >= 0)
-        {
+    }else{
+        while(cur && (strcmp(buffer, cur->cognome)) >= 0){
             pre = cur;
             cur = cur->next;
         }
@@ -261,12 +232,10 @@ void Inseriscio(char* buffer, int es)
     }
 }
 
-void Salva(FILE *fp)
-{
+void Salva(FILE *fp){
     Studente *cur = head;
 
-    while(cur)
-    {
+    while(cur){
         fprintf(fp, "%s %d * ", cur->cognome, cur->Esami);
         cur = cur->next;
     }
