@@ -35,11 +35,11 @@ int main () {
 }
 
 int Sub(char *str, char *sub, int i){
-  int unsigned trovata=1, j;
+  int unsigned ok=1, j;
 
-  for(j=0;j<strlen(sub) && trovata;j++)
+  for(j=0;j<strlen(sub) && ok;j++)
     if(str[i+j]!=sub[j])
-      trovata=0;
+      ok=0;
 
-  return trovata;
+  return ok;
 }
