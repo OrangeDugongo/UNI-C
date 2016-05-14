@@ -25,6 +25,7 @@ int main () {
       for(j=0;str[i+j]!='\0';j++)
         str[i+j]=str[i+j+strlen(sub)];
       str[i+j+1]='\0';
+      i--;
     }
 
   str=(char *)realloc(str, (strlen(str)+1)*sizeof(char));
