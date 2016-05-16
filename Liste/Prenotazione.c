@@ -21,7 +21,7 @@ void Prenota(char *, int, int);
 void Colonna(int, char *, Posto **);
 void Print();
 
-struct Riga *head=NULL;
+struct Riga *HEAD=NULL;
 
 int main() {
     int i, n, riga, col;
@@ -46,42 +46,32 @@ int main() {
 
 
 void Prenota(char* cognome, int riga, int col) {  /* l'inserzione sar� ordinata ma non ci sono ripetizioni */
-    Riga *cur=head;
-    Riga *prec=NULL;
+    Riga *cur=HEAD, *prec=NULL;
 
-    if(!cur || cur->riga > riga) {
-        Riga *New=(Riga *)malloc(sizeof(Riga));
-
-        New->riga=riga;
-        New->link=(Posto *)malloc(sizeof(Posto));
-        New->link->colonna=col;
-        New->link->next=NULL;
-        New->link->cognome=(char *)calloc(strlen(cognome)+1, sizeof(char));
-        strcpy(New->link->cognome, cognome);
-
-        New->next=head;
-        head=New;
-    }else {
-        while(cur && cur->riga < riga){
-            prec=cur;
-            cur=cur->next;
-        }
-
-        if(!cur || cur->riga != riga) {
-          Riga *New=(Riga *)malloc(sizeof(Riga));
-
-          New->riga=riga;
-          New->link=(Posto *)malloc(sizeof(Posto));
-          New->link->colonna=col;
-          New->link->next=NULL;
-          New->link->cognome=(char *)calloc(strlen(cognome)+1, sizeof(char));
-          strcpy(New->link->cognome, cognome);
-
-          New->next=cur;
-          prec->next=New;
-        }else
-          Colonna(col, cognome, &(cur->link));
+    while(cur && cur->riga < riga){
+        prec=cur;
+        cur=cur->next;
     }
+
+    if(cur && cur->riga==riga)
+      Colonna(col, cognome, &(cur->link));
+    else{
+      Riga *New=(Riga *)malloc(sizeof(Riga));
+      New->riga=riga;
+      New->link=(Posto *)malloc(sizeof(Posto));
+      New->link->colonna=col;
+      New->link->next=NULL;
+      New->link->cognome=(char *)calloc(strlen(cognome)+1, sizeof(char));
+      strcpy(New->link->cognome, cognome);
+
+      if(!prec) {
+        New->next=HEAD;
+        HEAD=New;
+      }else{
+        New->next=cur;
+        prec->next=New;
+      }
+  }
 }
 
 void Colonna(int col, char *nome, Posto **headP){
@@ -105,7 +95,7 @@ void Colonna(int col, char *nome, Posto **headP){
 }
 
 void Print(){
-  Riga *cur=head, *pre=NULL;
+  Riga *cur=HEAD, *pre=NULL;
   printf("\n");
   while(cur){
     printf("RIGA %d\n", cur->riga+1);
