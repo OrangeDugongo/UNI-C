@@ -17,16 +17,15 @@ typedef struct Riga{
     struct Riga *next;
 }Riga;
 
-void Prenota(char *, int, int);
+void Prenota(Riga **, char *, int, int);
 void Colonna(int, char *, Posto **);
-void Print();
-
-struct Riga *HEAD=NULL;
+void Print(Riga *);
 
 int main() {
     int i, n, riga, col;
     char buffer[200];
     srand(time(NULL));
+    Riga *head=NULL;
 
     printf("Quanti spattatori vuoi prenotare: ");
     scanf("%d", &n);
@@ -37,16 +36,16 @@ int main() {
         riga=rand()%15;
         col=rand()%20;
 
-        Prenota(buffer, riga, col);
+        Prenota(&head, buffer, riga, col);
     }
-    Print();
+    Print(head);
     __fpurge(stdin);
     getchar();
 }
 
 
-void Prenota(char* cognome, int riga, int col) {  /* l'inserzione sar� ordinata ma non ci sono ripetizioni */
-    Riga *cur=HEAD, *prec=NULL;
+void Prenota(Riga **head, char* cognome, int riga, int col) {  /* l'inserzione sar� ordinata ma non ci sono ripetizioni */
+    Riga *cur=*head, *prec=NULL;
 
     while(cur && cur->riga < riga){
         prec=cur;
@@ -65,8 +64,8 @@ void Prenota(char* cognome, int riga, int col) {  /* l'inserzione sar� ordinat
       strcpy(New->link->cognome, cognome);
 
       if(!prec) {
-        New->next=HEAD;
-        HEAD=New;
+        New->next=*head;
+        *head=New;
       }else{
         New->next=cur;
         prec->next=New;
@@ -94,8 +93,8 @@ void Colonna(int col, char *nome, Posto **headP){
   }
 }
 
-void Print(){
-  Riga *cur=HEAD, *pre=NULL;
+void Print(Riga *head){
+  Riga *cur=head, *pre=NULL;
   printf("\n");
   while(cur){
     printf("RIGA %d\n", cur->riga+1);
