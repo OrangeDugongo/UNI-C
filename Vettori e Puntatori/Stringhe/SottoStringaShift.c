@@ -8,7 +8,7 @@
 
 int Sub(char *, char *, int);
 
-int main () {
+int main(){
   char *str=(char *)malloc(200*sizeof(char));
   char *sub=(char *)malloc(200*sizeof(char));
   unsigned int i, j;
@@ -22,9 +22,8 @@ int main () {
 
   for(i=0;i<strlen(str);i++)
     if(Sub(str, sub, i)){
-      for(j=0;str[i+j]!='\0';j++)
+      for(j=0;i+j<=strlen(str);j++)
         str[i+j]=str[i+j+strlen(sub)];
-      str[i+j+1]='\0';
       i--;
     }
 
