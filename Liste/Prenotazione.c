@@ -75,21 +75,25 @@ void Prenota(Riga **head, char* cognome, int riga, int col) {  /* l'inserzione s
 
 void Colonna(int col, char *nome, Posto **headP){
   Posto *cur=*headP, *pre=NULL;
+  
   while(!cur && col>cur->colonna){
     pre=cur;
     cur=cur->next;
   }
-  Posto *New=(Posto *)malloc(sizeof(Posto));
-  New->colonna=col;
-  New->cognome=(char *)calloc(strlen(nome)+1, sizeof(char));
-  strcpy(New->cognome, nome);
 
-  if(!pre && col!=cur->colonna){
-    New->next=*headP;
-    *headP=New;
-  }else if(pre){
-    New->next=cur;
-    pre->next=New;
+  if(col!=cur->colonna){
+    Posto *New=(Posto *)malloc(sizeof(Posto));
+    New->colonna=col;
+    New->cognome=(char *)calloc(strlen(nome)+1, sizeof(char));
+    strcpy(New->cognome, nome);
+
+    if(!pre){
+      New->next=*headP;
+      *headP=New;
+    }else{
+      New->next=cur;
+      pre->next=New;
+    }
   }
 }
 
