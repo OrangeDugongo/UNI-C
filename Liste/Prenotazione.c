@@ -75,7 +75,7 @@ void Prenota(Riga **head, char* cognome, int riga, int col) {  /* l'inserzione s
 
 void Colonna(int col, char *nome, Posto **headP){
   Posto *cur=*headP, *pre=NULL;
-  
+
   while(!cur && col>cur->colonna){
     pre=cur;
     cur=cur->next;
@@ -101,8 +101,8 @@ void Print(Riga *head){
   Riga *cur=head, *pre=NULL;
   printf("\n");
   while(cur){
-    printf("RIGA %d\n", cur->riga+1);
     Posto *curP=cur->link, *preP=NULL;
+    printf("RIGA %d\n", cur->riga+1);
     while(curP){
       printf("Posto %d: %s\n", curP->colonna+1, curP->cognome);
       preP=curP;
