@@ -22,7 +22,7 @@ int main(){
 
   for(i=0;i<strlen(str);i++)
     if(Sub(str, sub, i)){
-      for(j=0;i+j<=strlen(str);j++)
+      for(j=0;i+j+strlen(sub)<=strlen(str);j++)
         str[i+j]=str[i+j+strlen(sub)];
       i--;
     }
