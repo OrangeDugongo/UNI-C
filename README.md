@@ -1,6 +1,8 @@
 # UNI-C
 
-Esercizi corso programmazione uno Università del Sannio.
+Corso programmazione 1 Università del Sannio, Benevento.
+
+**Attenzione** nel codice potrebbero esserci errori.
 
 ## License
 
