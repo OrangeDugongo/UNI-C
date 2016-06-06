@@ -1,6 +1,6 @@
 /*  Scrivere un programma c per identidficare la parola ripetuta più volte all'
     interno di un file di testo.
-    - il nome del file viene specificato come primo argomento da line di comando.
+    - il nome del file viene specificato come primo argomento da linea di comando.
     - il numero di caratteri e parole del file non è noto.
     - il file contiene unicamente lettere maiuscole, spazi e new-line.
     - il file di testo è composto da più righe.
