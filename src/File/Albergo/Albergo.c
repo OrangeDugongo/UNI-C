@@ -20,7 +20,7 @@ Albergo *Search(Albergo *head, int servizio);
 
 int main(){
   char buffer[21];
-  int n;
+  int scelta;
   Albergo *head=NULL, *best=NULL;
   FILE *src;
 
@@ -41,13 +41,13 @@ int main(){
       printf("\n3. Frigo Bar");
       printf("\n0. Exit");
       printf("\nA quale servizio sei interessato: ");
-      scanf("%d", &n);
+      scanf("%d", &scelta);
 
-      if(n){
-        best=Search(head, n-1);
+      if(scelta>0 && scelta<4){
+        best=Search(head, scelta-1);
         printf("\nBEST CHOISE: %s, %d€\n", best->nome, best->prezzo);
       }
-    }while(n);
+    }while(scelta);
   }
 
   __fpurge(stdin);
