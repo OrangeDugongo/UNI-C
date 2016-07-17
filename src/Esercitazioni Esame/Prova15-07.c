@@ -26,7 +26,7 @@ int main(){
     char c;
 
     do{
-        if(i++)
+        if(i++)//Messaggio di errore solo se il primo inserimento è errato
             printf("ERRORE\nSono consentiti solo interi positivi\n");
 
         printf("Quante stringhe vuoi inserire: ");
@@ -40,7 +40,7 @@ int main(){
     printf("Inserisci il carattere da cui troncare: ");
     scanf("%c", &c);
 
-    while(head){
+    while(head){//non è necessario usare cur perché il programma termina in seguito al while
         Tronca(head->str, c);
         printf("%s\n", head->str);
         head=head->next;
